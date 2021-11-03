@@ -13,6 +13,7 @@ export function Header(){
                     <a href="/"> Posts </a>
                 </nav>
 
+
                 <SignInButton />
             </div>
         </header>
