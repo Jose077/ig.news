@@ -19,17 +19,36 @@ export default NextAuth({
 
       try {
         await fauna.query(
-          q.Create(
-            q.Collection('users'),
-            { data: { email } }
+          q.If(
+            q.Not(
+              q.Exists(
+                q.Match(
+                  q.Index('user_by_email'),
+                  q.Casefold(email)
+                )
+              )
+            ),
+            q.Create(
+              q.Collection('users'),
+              {data: { email }}
+            ),
+            q.Get(
+              q.Match(
+                q.Index('user_by_email'),
+                q.Casefold(email)
+              )
+            )
           )
         )
 
         return true
 
-      } catch {
+      } catch(error) {
+        console.log('Error aqui',error);
+        
         return false
       }
+
 
     },
   }
