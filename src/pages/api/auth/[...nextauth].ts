@@ -15,7 +15,6 @@ export default NextAuth({
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      console.log(user, account, profile, email, credentials, "abrubaubra");
 
       try {
         await fauna.query(
@@ -44,7 +43,7 @@ export default NextAuth({
         return true
 
       } catch(error) {
-        console.log('Error aqui',error);
+        console.log(error);
         
         return false
       }
