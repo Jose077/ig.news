@@ -22,11 +22,13 @@ export default function Post({ post }: PostProps ){
                 <title> { post.title} | Ignews </title>
             </Head>
 
-            <main className={ styles.container } >
+            <main className={ styles.container }>
                 <article className={styles.post}>
                     <h1>{ post.title }</h1>
+
                     <time> { post.updatedAt} </time>
-                    <div
+
+                    <div 
                         className={styles.postContent} 
                         dangerouslySetInnerHTML={{__html: post.content }} 
                     />
@@ -39,12 +41,10 @@ export default function Post({ post }: PostProps ){
 export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
     const session = await getSession({ req });
 
-    console.log(session);
-    
 
     const { slug } = params;
 
-    if (!session.activeSubscription) {
+    if (!session?.activeSubscription) {
         return {
             redirect: {
                 destination: '/',
@@ -59,17 +59,14 @@ export const getServerSideProps: GetServerSideProps = async ({ req, params }) =>
     
     const post = {
         slug,
-        ttle: RichText.asText(response.data.title),
-        content: RichText.asHtml(response.data.content),
-        updatedAt: new Date(response.last_publication_date).toLocaleDateString('pt-BR', {
+        ttle: RichText.asText(response?.data.title),
+        content: RichText.asHtml(response?.data.content),
+        updatedAt: new Date(response?.last_publication_date).toLocaleDateString('pt-BR', {
             day: '2-digit',
             month: 'long',
             year: 'numeric'
         })
     }
-
-    console.log("Response aqui", post);
-
 
     return {
         props: {
