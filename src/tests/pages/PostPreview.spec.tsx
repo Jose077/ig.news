@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import Post from "../../pages/posts/preview/[slug]";
 import { mocked } from "ts-jest/utils";
 import {  useSession } from "next-auth/client";
@@ -49,8 +49,12 @@ describe('Post preview page', () => {
 
         render(<Post post={post} />);
         
+        await waitFor(() => {
+            screen.logTestingPlaygroundURL()
 
-        expect(pushMock).toHaveBeenCalledWith('/posts/my-new-post')
+            expect(pushMock).toHaveBeenCalledWith('/posts/my-new-post')
+        })
+
 
     });
 

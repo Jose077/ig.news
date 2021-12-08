@@ -13,6 +13,16 @@ module.exports = {
 
     testEnvironment: 'jsdom',
 
+    collectCoverage: true,
+    collectCoverageForm: [
+        "src/**/*.tsx",
+        "!src/**/*.spec.tsx",
+        "!src/**/_app.tsx",
+        "!src/**/_document.tsx",
+        "!src/**/*.ts"
+    ],
+    coverageReporters: ["lcov", "json"]
+
 
 
 }
