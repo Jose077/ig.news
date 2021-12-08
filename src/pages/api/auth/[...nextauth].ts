@@ -14,6 +14,7 @@ export default NextAuth({
       scope: 'read:user'
     }),
   ],
+  
   callbacks: {
 
     async session(session) {
@@ -35,14 +36,11 @@ export default NextAuth({
                 )
 
               ),
-
               q.Match(
                 q.Index('subscription_by_status'),
                 "active"
               )
-
             ])
-
           )
         )
 
@@ -94,5 +92,6 @@ export default NextAuth({
 
 
     },
+    
   }
 })
